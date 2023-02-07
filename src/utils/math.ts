@@ -1,3 +1,5 @@
+import { exit } from "process";
+
 const greatestCommonDivisor = (num1: number, num2: number): number => {
   num1 = Math.abs(num1);
   num2 = Math.abs(num2);
@@ -21,7 +23,9 @@ const isPrime = (num: number): boolean => {
 };
 
 const primeFactorization = (number: number): object => {
-  if(isPrime(number)) return {};
+  if (isPrime(number)) {
+    return { value: number };
+  }
   if (number < 2) {
     return { value: number };
   }
@@ -30,32 +34,91 @@ const primeFactorization = (number: number): object => {
   while (number % divisor !== 0) {
     divisor++;
   }
-  
+
   const factorTree = {
+    name: number,
     value: number,
     children: [
       {
-        left: {
-          number: {
-            name: divisor.toString(),
-            value: divisor,
-          },
-        },
+        name: divisor,
+        value: divisor,
       },
       {
-        right: {
-          number: {
-            name: (number / divisor).toString(),
-            value: number / divisor,
-          },
-          children: [
-            primeFactorization(number / divisor)
-          ],
-        },
+        name: (number / divisor),
+        value: number / divisor,
+        children: [primeFactorization(number / divisor)],
       },
-    ]
-  }
+    ],
+  };
   return factorTree;
+};
+
+
+function primeFactors(number: number): TreeNode {
+  const result: TreeNode = { name: number };
+
+  if (isPrime(number)) {
+    return { name: number };
+  }
+
+  for (let divisor = 2; divisor <= number; divisor++) {
+    if (number % divisor === 0) {
+      const children: TreeNode[] = [{ name: divisor }];
+      let child = number / divisor;
+
+      while (child % divisor === 0) {
+        child = child / divisor;
+      }
+
+      children.push(createTree(child));
+      result.children = children;
+      break;
+    }
+  }
+
+  return result;
 }
 
-export { greatestCommonDivisor, leastCommonMultiple, primeFactorization };
+interface TreeNode {
+  name: number;
+  children?: TreeNode[];
+}
+
+function createTree(number: number): TreeNode {
+  return primeFactors(number);
+}
+
+
+
+
+
+
+/* const return = {
+  name: 220,
+  children: [
+    {
+      name: 2,
+    },
+    {
+      name: 110,
+      children: [
+        {
+          name: 2
+        },
+        {
+          name: 55,
+          children: [
+            {
+              name: 5
+            },
+            {
+              name: 11
+            }
+          ]
+        }
+      ]
+    }
+  ]
+} */
+
+export { greatestCommonDivisor, leastCommonMultiple, primeFactorization, primeFactors };
