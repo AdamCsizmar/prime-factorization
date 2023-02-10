@@ -11,7 +11,7 @@ const ResultContainer = () => {
   const LCM = (numberOne && numberTwo) ? leastCommonMultiple(numberOne, numberTwo) : 0;
 
   return (
-    <Container className='flex flex-wrap justify-center items-center md:space-x-10 space-y-5 md:space-y-0'>
+    <Container className='flex flex-col space-y-5 lg:flex-row lg:space-y-0 lg:space-x-5 justify-center items-center'>
       <Card className=' space-x-5 border-emerald-400'>
         <p>Legkisebb közös többszörös:</p>
         <span className='font-bold text-2xl text-emerald-400'>{LCM}</span>

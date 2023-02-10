@@ -1,4 +1,5 @@
 import { exit } from "process";
+import spellNumber from "./translateNumber";
 
 const greatestCommonDivisor = (num1: number, num2: number): number => {
   num1 = Math.abs(num1);
@@ -22,55 +23,23 @@ const isPrime = (num: number): boolean => {
   return num > 1;
 };
 
-const primeFactorization = (number: number): object => {
-  if (isPrime(number)) {
-    return { value: number };
-  }
-  if (number < 2) {
-    return { value: number };
-  }
-
-  let divisor = 2;
-  while (number % divisor !== 0) {
-    divisor++;
-  }
-
-  const factorTree = {
-    name: number,
-    value: number,
-    children: [
-      {
-        name: divisor,
-        value: divisor,
-      },
-      {
-        name: (number / divisor),
-        value: number / divisor,
-        children: [primeFactorization(number / divisor)],
-      },
-    ],
-  };
-  return factorTree;
-};
-
-
 function primeFactors(number: number): TreeNode {
-  const result: TreeNode = { name: number };
+  const result: TreeNode = { name: number, spelled: spellNumber(number) };
 
   if (isPrime(number)) {
-    return { name: number };
+    return { name: number, spelled: spellNumber(number)};
   }
 
   for (let divisor = 2; divisor <= number; divisor++) {
     if (number % divisor === 0) {
-      const children: TreeNode[] = [{ name: divisor }];
+      const children: TreeNode[] = [{ name: divisor, spelled: spellNumber(divisor) }];
       let child = number / divisor;
 
       while (child % divisor === 0) {
         child = child / divisor;
       }
 
-      children.push(createTree(child));
+      children.push(primeFactors(child));
       result.children = children;
       break;
     }
@@ -81,6 +50,7 @@ function primeFactors(number: number): TreeNode {
 
 interface TreeNode {
   name: number;
+  spelled?: string;
   children?: TreeNode[];
 }
 
@@ -88,37 +58,4 @@ function createTree(number: number): TreeNode {
   return primeFactors(number);
 }
 
-
-
-
-
-
-/* const return = {
-  name: 220,
-  children: [
-    {
-      name: 2,
-    },
-    {
-      name: 110,
-      children: [
-        {
-          name: 2
-        },
-        {
-          name: 55,
-          children: [
-            {
-              name: 5
-            },
-            {
-              name: 11
-            }
-          ]
-        }
-      ]
-    }
-  ]
-} */
-
-export { greatestCommonDivisor, leastCommonMultiple, primeFactorization, primeFactors };
+export { greatestCommonDivisor, leastCommonMultiple, primeFactors };

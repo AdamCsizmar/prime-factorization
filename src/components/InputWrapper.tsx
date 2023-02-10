@@ -17,7 +17,8 @@ const InputWarpper = () => {
         osztóját
       </h1>
       <Card className='flex-wrap space-x-4 space-y-5 sm:space-y-0'>
-        <p className='font-bold '>Írj be két számot...</p>
+        <p className='font-bold flex-0'>Írj be két számot...</p>
+        <div></div>
         <input
           type='number'
           className='p-2 bg-transparent border-2 rounded-lg text-center'

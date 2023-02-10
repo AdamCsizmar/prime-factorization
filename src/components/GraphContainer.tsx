@@ -2,7 +2,6 @@ import { useContext } from "react";
 import { AppContext } from "../Context";
 import Card from "./Card";
 import Container from "./Container";
-import { primeFactorization } from "../utils/math";
 import PrimeFactorizationTree from "./PrimeFactorizationTree.jsx";
 
 const GraphContainer = () => {
@@ -10,13 +9,9 @@ const GraphContainer = () => {
 
   console.log(numberOne, numberTwo);
   return (
-    <Container className='flex flex-col space-y-5 lg:flex-row lg:space-y-0 lg:space-x-5 justify-center items-center '>
-      <Card className='w-fit space-x-5'>
-        <PrimeFactorizationTree number={numberOne} />
-      </Card>
-      <Card className='w-fit space-x-5'>
-        <PrimeFactorizationTree number={numberTwo} />
-      </Card>
+    <Container className='flex flex-col space-y-5 lg:flex-row lg:space-y-0 lg:space-x-5 justify-center items-center overflow-x-auto'>
+      {(numberOne !== 0) && <PrimeFactorizationTree number={numberOne} />}
+      {(numberTwo !== 0) && <PrimeFactorizationTree number={numberTwo} />}
     </Container>
   );
 };

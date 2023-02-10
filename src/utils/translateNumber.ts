@@ -1,144 +1,140 @@
-function numberToSpell(int: number, b?: number) {
-  if (b == null) {
-    b = 1;
+function numberToSpell(number: number, isRound?: number) {
+  let spelledNumber = "";
+  
+  if (isRound== null) {
+    isRound= 1;
   }
-  var s = "";
-  if (int > 999999) {
-    if (int > 2000000) {
-      s += numberToSpell(Math.floor(int / 1000000), 2);
-      s += "millió-";
-    } else {
-      if (int == 2000000) {
-        s += "kétmillió";
-      } else {
-        s += "egymillió";
-      }
+
+  if (number >= 1000000) {
+    spelledNumber += numberToSpell(Math.floor(number / 1000000), 2) + "millió-";
+    number = number % 1000000;
+    if (number == 0) {
+      return spelledNumber.substring(0, spelledNumber.length - 1);
     }
   }
-  if (int > 999) {
-    if (int > 2000) {
-      s += numberToSpell(Math.floor(int / 1000), 2);
-      s += "ezer-";
-    } else {
-      if (int == 2000) {
-        s += "kétezer";
-      } else {
-        s += "ezer";
-      }
+
+  if (number >= 1000) {
+    spelledNumber += numberToSpell(Math.floor(number / 1000), 2) + "ezer-";
+    number = number % 1000;
+    if (number == 0) {
+      return spelledNumber.substring(0, spelledNumber.length - 1);
     }
   }
-  if (int > 99) {
-    let szazas = Math.floor((int % 1000) / 100);
-    switch (szazas) {
+
+  if (number > 99) {
+    let hundreds = Math.floor((number % 1000) / 100);
+    switch (hundreds) {
       case 9:
-        s += "kilenc";
+        spelledNumber += "kilenc";
         break;
       case 8:
-        s += "nyolc";
+        spelledNumber += "nyolc";
         break;
       case 7:
-        s += "hét";
+        spelledNumber += "hét";
         break;
       case 6:
-        s += "hat";
+        spelledNumber += "hat";
         break;
       case 5:
-        s += "öt";
+        spelledNumber += "öt";
         break;
       case 4:
-        s += "négy";
+        spelledNumber += "négy";
         break;
       case 3:
-        s += "három";
+        spelledNumber += "három";
         break;
       case 2:
-        s += "két";
+        spelledNumber += "két";
         break;
     }
-    if (szazas > 0) {
-      s += "száz";
+    if (hundreds > 0) {
+      spelledNumber += "száz";
     }
   }
-  let egyes = int % 10;
-  if (int % 100 > 9) {
-    var tizes = Math.floor((int % 100) / 10);
-    switch (tizes) {
+
+  let ones = number % 10;
+
+  if (number % 100 > 9) {
+    var tens = Math.floor((number % 100) / 10);
+    switch (tens) {
       case 1:
-        if (egyes > 0) {
-          s += "tizen";
+        if (ones > 0) {
+          spelledNumber+= "tizen";
         } else {
-          s += "tíz";
+          spelledNumber+= "tíz";
         }
         break;
       case 2:
-        if (egyes > 0) {
-          s += "huszon";
+        if (ones > 0) {
+          spelledNumber+= "huszon";
         } else {
-          s += "húsz";
+          spelledNumber+= "húsz";
         }
         break;
       case 3:
-        s += "harminc";
+        spelledNumber+= "harminc";
         break;
       case 4:
-        s += "negyven";
+        spelledNumber+= "negyven";
         break;
       case 5:
-        s += "ötven";
+        spelledNumber+= "ötven";
         break;
       case 6:
-        s += "hatvan";
+        spelledNumber+= "hatvan";
         break;
       case 7:
-        s += "hetven";
+        spelledNumber+= "hetven";
         break;
       case 8:
-        s += "nyolcvan";
+        spelledNumber+= "nyolcvan";
         break;
       case 9:
-        s += "kilencven";
+        spelledNumber+= "kilencven";
         break;
     }
   }
-  if (egyes > 0) {
-    switch (egyes) {
+  if (ones > 0) {
+    switch (ones) {
       case 1:
-        s += "egy";
+        spelledNumber += "egy";
         break;
       case 2:
-        if (b == 1) {
-          s += "kettő";
+        if (isRound== 1) {
+          spelledNumber += "kettő";
         } else {
-          s += "két";
+          spelledNumber += "két";
         }
         break;
       case 3:
-        s += "három";
+        spelledNumber += "három";
         break;
       case 4:
-        s += "négy";
+        spelledNumber += "négy";
         break;
       case 5:
-        s += "öt";
+        spelledNumber += "öt";
         break;
       case 6:
-        s += "hat";
+        spelledNumber += "hat";
         break;
       case 7:
-        s += "hét";
+        spelledNumber += "hét";
         break;
       case 8:
-        s += "nyolc";
+        spelledNumber += "nyolc";
         break;
       case 9:
-        s += "kilenc";
+        spelledNumber += "kilenc";
         break;
     }
   }
 
-  if (s.endsWith("-")) s = s.substring(0, s.length - 1);
+  if (spelledNumber.endsWith("-")) spelledNumber = spelledNumber.substring(0, spelledNumber.length - 1);
 
-  return s;
+  return spelledNumber;
 }
 
 export default numberToSpell;
