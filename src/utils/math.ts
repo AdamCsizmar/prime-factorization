@@ -1,4 +1,3 @@
-import { exit } from "process";
 import spellNumber from "./translateNumber";
 
 const greatestCommonDivisor = (num1: number, num2: number): number => {
@@ -32,15 +31,10 @@ function primeFactors(number: number): TreeNode {
 
   for (let divisor = 2; divisor <= number; divisor++) {
     if (number % divisor === 0) {
-      const children: TreeNode[] = [{ name: divisor, spelled: spellNumber(divisor) }];
-      let child = number / divisor;
-
-      while (child % divisor === 0) {
-        child = child / divisor;
-      }
-
-      children.push(primeFactors(child));
-      result.children = children;
+      result.children = [
+        { name: divisor, spelled: spellNumber(divisor) },
+        primeFactors(number / divisor)
+      ];
       break;
     }
   }
@@ -52,10 +46,6 @@ interface TreeNode {
   name: number;
   spelled?: string;
   children?: TreeNode[];
-}
-
-function createTree(number: number): TreeNode {
-  return primeFactors(number);
 }
 
 export { greatestCommonDivisor, leastCommonMultiple, primeFactors };
