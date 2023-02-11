@@ -15,9 +15,6 @@ const PrimeFactorizationTree = (props /* : Props */) => {
 
     const treeLayout = tree().size([300, 500]);
     const root = hierarchy(data);
-    console.log(props.number)
-    console.log("root", root);
-    console.log("links", root.links());
 
     treeLayout(root);
 
@@ -87,7 +84,6 @@ const PrimeFactorizationTree = (props /* : Props */) => {
       .on("mouseover", (event, node) => {
         const mouseY = event.pageY;
         const mouseX = event.pageX;
-        console.log(mouseX, mouseY);
 
         tooltip.style("opacity", 1);
         tooltip.style("position", "absolute")
@@ -99,7 +95,6 @@ const PrimeFactorizationTree = (props /* : Props */) => {
       .on("mousemove", (event) => {
         tooltip.style("top", `${event.pageY - 40}px`);
         tooltip.style("left", `${event.pageX + 10}px`);
-
       })
       .on("mouseleave", () => {
         tooltip.style("opacity", 0);

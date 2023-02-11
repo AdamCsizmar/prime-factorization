@@ -7,7 +7,6 @@ import PrimeFactorizationTree from "./PrimeFactorizationTree.jsx";
 const GraphContainer = () => {
   const { numberOne, numberTwo } = useContext(AppContext);
 
-  console.log(numberOne, numberTwo);
   return (
     <Container className='flex flex-col space-y-5 lg:flex-row lg:space-y-0 lg:space-x-5 justify-center items-center overflow-x-auto'>
       {(numberOne !== 0) && <PrimeFactorizationTree number={numberOne} />}
