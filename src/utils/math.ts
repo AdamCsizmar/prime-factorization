@@ -26,14 +26,14 @@ function primeFactors(number: number): TreeNode {
   const result: TreeNode = { name: number, spelled: spellNumber(number) };
 
   if (isPrime(number)) {
-    return { name: number, spelled: spellNumber(number), prime: true};
+    return { name: number, spelled: spellNumber(number), prime: true };
   }
 
   for (let divisor = 2; divisor <= number; divisor++) {
     if (number % divisor === 0) {
       result.children = [
         { name: divisor, spelled: spellNumber(divisor), prime: true },
-        primeFactors(number / divisor)
+        primeFactors(number / divisor),
       ];
       break;
     }
@@ -45,7 +45,7 @@ function primeFactors(number: number): TreeNode {
 interface TreeNode {
   name: number;
   spelled: string;
-  prime?: boolean,
+  prime?: boolean;
   children?: TreeNode[];
 }
 
