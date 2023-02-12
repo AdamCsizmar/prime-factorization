@@ -1,14 +1,14 @@
 function spellNumber(number: number, isRound?: number) {
   let spelledNumber = "";
-  
-  if (isRound== null) {
-    isRound= 1;
+
+  if (isRound === null) {
+    isRound = 1;
   }
 
   if (number >= 1000000) {
     spelledNumber += spellNumber(Math.floor(number / 1000000), 2) + "millió-";
     number = number % 1000000;
-    if (number == 0) {
+    if (number === 0) {
       return spelledNumber.substring(0, spelledNumber.length - 1);
     }
   }
@@ -16,7 +16,7 @@ function spellNumber(number: number, isRound?: number) {
   if (number >= 1000) {
     spelledNumber += spellNumber(Math.floor(number / 1000), 2) + "ezer-";
     number = number % 1000;
-    if (number == 0) {
+    if (number === 0) {
       return spelledNumber.substring(0, spelledNumber.length - 1);
     }
   }
@@ -61,38 +61,38 @@ function spellNumber(number: number, isRound?: number) {
     switch (tens) {
       case 1:
         if (ones > 0) {
-          spelledNumber+= "tizen";
+          spelledNumber += "tizen";
         } else {
-          spelledNumber+= "tíz";
+          spelledNumber += "tíz";
         }
         break;
       case 2:
         if (ones > 0) {
-          spelledNumber+= "huszon";
+          spelledNumber += "huszon";
         } else {
-          spelledNumber+= "húsz";
+          spelledNumber += "húsz";
         }
         break;
       case 3:
-        spelledNumber+= "harminc";
+        spelledNumber += "harminc";
         break;
       case 4:
-        spelledNumber+= "negyven";
+        spelledNumber += "negyven";
         break;
       case 5:
-        spelledNumber+= "ötven";
+        spelledNumber += "ötven";
         break;
       case 6:
-        spelledNumber+= "hatvan";
+        spelledNumber += "hatvan";
         break;
       case 7:
-        spelledNumber+= "hetven";
+        spelledNumber += "hetven";
         break;
       case 8:
-        spelledNumber+= "nyolcvan";
+        spelledNumber += "nyolcvan";
         break;
       case 9:
-        spelledNumber+= "kilencven";
+        spelledNumber += "kilencven";
         break;
     }
   }
@@ -102,7 +102,7 @@ function spellNumber(number: number, isRound?: number) {
         spelledNumber += "egy";
         break;
       case 2:
-        if (isRound== 1) {
+        if (isRound === 1) {
           spelledNumber += "kettő";
         } else {
           spelledNumber += "két";

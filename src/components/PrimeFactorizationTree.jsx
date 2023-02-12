@@ -1,20 +1,31 @@
-import { primeFactors, isPrime } from "../utils/math";
-import { useRef, useEffect } from "react";
+import { primeFactors } from "../utils/math";
+import { useRef, useEffect, useState } from "react";
 import { hierarchy, select, tree, linkVertical } from "d3";
 
 const PrimeFactorizationTree = (props /* : Props */) => {
   const data = primeFactors(props.number);
-  let svgRef = useRef(null);
+  const [treeHeight, setTreeHeight] = useState(0);
+  const svgRef = useRef(null);
+
+  const svgWidth = 75 + 120 + treeHeight * 75;
+  const svgHeight = (treeHeight + 1) * 130;
+
   useEffect(() => {
     const svg = select(svgRef.current);
 
-    const treeLayout = tree().size([300, 500]);
-    const root = hierarchy(data);
+    const treeLayout = tree()
+      .nodeSize([120, 120])
+      .nodeSize([145, 125])
+      .separation(function (a, b) {
+        return a.parent == b.parent ? 1 : 1.25;
+      });
 
+    const root = hierarchy(data);
     treeLayout(root);
+    setTreeHeight(root.height);
 
     const linkGenerator = linkVertical()
-      .x((node) => node.x * 2)
+      .x((node) => node.x + 135)
       .y((node) => node.depth * 130 + 62);
 
     const tooltip = select("#tooltip");
@@ -29,7 +40,8 @@ const PrimeFactorizationTree = (props /* : Props */) => {
       .attr("stroke", "white")
       .attr("z-index", "-1")
       .attr("stroke-width", 2)
-      .attr("d", linkGenerator);
+      .attr("d", linkGenerator)
+      .lower();
 
     svg
       .selectAll(".circle")
@@ -39,7 +51,7 @@ const PrimeFactorizationTree = (props /* : Props */) => {
       .attr("fill", "#1C1917")
       .attr("stroke-width", 2)
       .attr("r", 60)
-      .attr("cx", (node) => node.x * 2)
+      .attr("cx", (node) => node.x + 135)
       .attr("cy", (node) => node.depth * 130 + 62);
 
     svg
@@ -52,9 +64,8 @@ const PrimeFactorizationTree = (props /* : Props */) => {
       .attr("font-family", "sans-serif")
       .attr("font-size", 20)
       .attr("fill", "white")
-      .attr("x", (node) => node.x * 2)
-      .attr("y", (node) => node.depth * 130 + 62 + 5)
-      .raise();
+      .attr("x", (node) => node.x + 135)
+      .attr("y", (node) => node.depth * 130 + 62 + 5);
 
     svg
       .selectAll(".overlay")
@@ -63,12 +74,10 @@ const PrimeFactorizationTree = (props /* : Props */) => {
       .attr("class", "overlay")
       .attr("fill", "transparent")
       .attr("stroke", (node) => (node.data.prime ? "#34D399" : "white"))
-      .attr("stroke-color", "red")
       .attr("stroke-width", 2)
       .attr("r", 60)
-      .attr("cx", (node) => node.x * 2)
-      .attr("cy", (node) => node.depth * 130 + 62)
-      .raise()
+      .attr("cx", (node) => node.x + 135)
+      .attr("cy", (node) => node.depth * 130 + 61)
       .on("mouseover", (event, node) => {
         tooltip.style("display", "block");
         tooltip.style("position", "absolute");
@@ -95,7 +104,7 @@ const PrimeFactorizationTree = (props /* : Props */) => {
           <span id='spelledValue' />
         </div>
       </div>
-      <svg ref={svgRef} width='550' height='700'></svg>
+      <svg ref={svgRef} width={svgWidth} height={svgHeight + 20}></svg>
     </div>
   );
 };
