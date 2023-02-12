@@ -12,7 +12,7 @@ const ResultContainer = () => {
 
   return (
     <Container className='flex flex-col space-y-5 lg:flex-row lg:space-y-0 lg:space-x-5 justify-center items-center'>
-      <Card className=' space-x-5 border-emerald-400'>
+      <Card className=' space-x-5'>
         <p>Legkisebb közös többszörös:</p>
         <span className='font-bold text-2xl text-emerald-400'>{LCM}</span>
       </Card>

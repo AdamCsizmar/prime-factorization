@@ -1,6 +1,5 @@
 import { useContext } from "react";
 import { AppContext } from "../Context";
-import Card from "./Card";
 import Container from "./Container";
 import PrimeFactorizationTree from "./PrimeFactorizationTree.jsx";
 

@@ -1,4 +1,4 @@
-function numberToSpell(number: number, isRound?: number) {
+function spellNumber(number: number, isRound?: number) {
   let spelledNumber = "";
   
   if (isRound== null) {
@@ -6,7 +6,7 @@ function numberToSpell(number: number, isRound?: number) {
   }
 
   if (number >= 1000000) {
-    spelledNumber += numberToSpell(Math.floor(number / 1000000), 2) + "millió-";
+    spelledNumber += spellNumber(Math.floor(number / 1000000), 2) + "millió-";
     number = number % 1000000;
     if (number == 0) {
       return spelledNumber.substring(0, spelledNumber.length - 1);
@@ -14,7 +14,7 @@ function numberToSpell(number: number, isRound?: number) {
   }
 
   if (number >= 1000) {
-    spelledNumber += numberToSpell(Math.floor(number / 1000), 2) + "ezer-";
+    spelledNumber += spellNumber(Math.floor(number / 1000), 2) + "ezer-";
     number = number % 1000;
     if (number == 0) {
       return spelledNumber.substring(0, spelledNumber.length - 1);
@@ -137,4 +137,4 @@ function numberToSpell(number: number, isRound?: number) {
   return spelledNumber;
 }
 
-export default numberToSpell;
+export default spellNumber;
